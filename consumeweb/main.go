@@ -1,8 +1,3 @@
-# Go_FlexibleApi_Endpoints_Call_Project
-Go_Api_call_project ,a flexible Api call project that allows for different endpoints from different web services in a single project
-
-## Calling multple endpoints sequentially
-
 package main
 import (
     "encoding/json"
@@ -12,6 +7,7 @@ import (
     "net/http"
 )
 var apis map[int]string
+var c chan map[int]interface{}
 func fetchData(API int) {
     url := apis[API]
     if resp, err := http.Get(url); err == nil {
@@ -50,36 +46,17 @@ func fetchData(API int) {
 	}
 func main() {
     apis = make(map[int]string)
-apis[1] = "http://data.fixer.io/api/latest?access_key=" + "<access_key>"
-apis[2] = "http://api.openweathermap.org/data/2.5/weather?" + "q=SINGAPORE&appid=<access-key>"
-    fetchData(1)
-    fetchData(2)
-}
-
-
-
-## Fetching from multiple web services
-at the same time
-One of the strengths of Go is its support for concurrency. Instead of calling the two web services sequentially (one after the other), why not call them concurrently (at the same time)?
-To do so, you just need to prefix each call to the fetchData() function with the go keyword:
-
-func main() {
-    apis = make(map[int]string)
-    apis[1] =
-"http://data.fixer.io/api/latest?access_key=" + "<access_key>" 
-
-apis[2] =
-"http://api.openweathermap.org/data/2.5/weather?" + "q=SINGAPORE&appid=<api_key>"
-
+   
+apis[1] = "http://data.fixer.io/api/latest?access_key=" + "940c85855dfd5f6943db08da3c0b4d8a"
+apis[2] = "http://api.openweathermap.org/data/2.5/weather?" + "q=SINGAPORE&appid=5173174765098f8144be5d150fdab03f"
 go fetchData(1) 
 go fetchData(2)
     fmt.Scanln()
+   
+    // we expect two results in the channel
+    for i := 0; i < 2; i++ {
+        fmt.Println(<-c)
+    }
+    fmt.Println("Done!")
+    fmt.Scanln()
 }
-
-## he output of the above codes when 
-go run main.go  
-
-command was run is: 
-
-298.08
-1.073555
