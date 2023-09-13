@@ -47,8 +47,8 @@ func fetchData(API int) {
 func main() {
     apis = make(map[int]string)
    
-apis[1] = "http://data.fixer.io/api/latest?access_key=" + "940c85855dfd5f6943db08da3c0b4d8a"
-apis[2] = "http://api.openweathermap.org/data/2.5/weather?" + "q=SINGAPORE&appid=5173174765098f8144be5d150fdab03f"
+apis[1] = "http://data.fixer.io/api/latest?access_key=" + "access-key"
+apis[2] = "http://api.openweathermap.org/data/2.5/weather?" + "acess_key"
 go fetchData(1) 
 go fetchData(2)
     fmt.Scanln()
